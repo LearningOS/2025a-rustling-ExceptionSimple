@@ -134,19 +134,6 @@ dependencies = [
  "windows-sys 0.61.0",
 ]
 
-# [[package]]
-# name = "console"
-# version = "0.16.1"
-# source = "registry+https://github.com/rust-lang/crates.io-index"
-# checksum = "b430743a6eb14e9764d4260d4c0d8123087d504eeb9c48f2b2a5e810dd369df4"
-# dependencies = [
-#  "encode_unicode 1.0.0",
-#  "libc",
-#  "once_cell",
-#  "unicode-width",
-#  "windows-sys 0.61.0",
-# ]
-
 [[package]]
 name = "difference"
 version = "2.0.0"
@@ -158,12 +145,6 @@ name = "encode_unicode"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34aa73646ffb006b8f5147f3dc182bd4bcb190227ce861fc4a4844bf8e3cb2c0"
-
-# [[package]]
-# name = "encode_unicode"
-# version = "1.0.0"
-# source = "registry+https://github.com/rust-lang/crates.io-index"
-# checksum = "34aa73646ffb006b8f5147f3dc182bd4bcb190227ce861fc4a4844bf8e3cb2c0"
 
 [[package]]
 name = "escargot"
@@ -260,7 +241,7 @@ version = "0.16.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d207dc617c7a380ab07ff572a6e52fa202a2a8f355860ac9c38e23f8196be1b"
 dependencies = [
- "console 0.15.7",
+ "console",
  "lazy_static",
  "number_prefix",
  "regex",
@@ -633,7 +614,7 @@ version = "5.5.1"
 dependencies = [
  "argh",
  "assert_cmd",
- "console 0.16.1",
+ "console",
  "glob",
  "home",
  "indicatif",
@@ -906,15 +887,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e201184e40b2ede64bc2ea34968b28e33622acdbbf37104f0e4a33f7abe657aa"
 dependencies = [
  "windows-link 0.2.0",
-]
-
-[[package]]
-name = "windows-sys"
-version = "0.61.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e201184e40b2ede64bc2ea34968b28e33622acdbbf37104f0e4a33f7abe657aa"
-dependencies = [
- "windows-link",
 ]
 
 [[package]]
