@@ -2,7 +2,6 @@
 	double linked list reverse
 	This problem requires you to reverse a doubly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -72,9 +71,58 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn reverse(&mut self){
-		// TODO
-	}
+
+    pub fn reverse(&mut self) {
+        if self.length <= 1 { 
+            return; 
+        }
+        
+        // 交换头尾指针
+        std::mem::swap(&mut self.start, &mut self.end);
+        
+        let mut current = self.start;
+        
+        while let Some(node_ptr) = current {
+            unsafe {
+                let node = &mut *node_ptr.as_ptr();
+                
+                // 保存下一个要处理的节点（反转前的prev）
+                let next_to_process = node.prev;
+                
+                // 交换当前节点的prev和next指针
+                // 大白话：将我的下一个结点换成我的上一个结点
+                // 完成后：我的 next 将指向我的 prev，因此 swap(node.prev, node.next)
+                std::mem::swap(&mut node.prev, &mut node.next);
+                
+                // 移动到下一个节点
+                current = next_to_process;
+            }
+        }
+    }
+	
+    // pub fn reverse(&mut self){
+    //     if self.length <= 1 { return; }
+    //     let mut current = self.start;
+    //     while true {
+    //         match current {
+    //             None => break,
+    //             Some(node_ptr) => unsafe {
+    //                 let mut p = *node_ptr.as_ptr();
+    //                 if let Some(n) = p.next {
+    //                     let mut n = *n.as_ptr();
+    //                     p.next = n.next;
+    //                     if let Some(t) = n.next {
+    //                         let mut pp = *t.as_ptr();
+    //                         pp.prev = p;
+    //                     }
+    //                     n.next = p;
+    //                     n.prev = p.prev;
+    //                     p.prev = n;
+    //                 }
+    //             }
+    //         }
+    //     }
+	// }
 }
 
 impl<T> Display for LinkedList<T>

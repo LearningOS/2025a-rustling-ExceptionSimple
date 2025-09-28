@@ -3,10 +3,8 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
 use std::cmp::Ordering;
 use std::fmt::Debug;
-
 
 #[derive(Debug)]
 struct TreeNode<T>
@@ -37,36 +35,81 @@ where
             right: None,
         }
     }
+
+    // Insert a node into the tree
+    fn insert(&mut self, value: T) {
+        match value.cmp(&self.value) {
+            Ordering::Less => {
+                // 插入到左子树
+                if let Some(ref mut left) = self.left {
+                    left.insert(value);
+                } else {
+                    self.left = Some(Box::new(TreeNode::new(value)));
+                }
+            }
+            Ordering::Greater => {
+                // 插入到右子树
+                if let Some(ref mut right) = self.right {
+                    right.insert(value);
+                } else {
+                    self.right = Some(Box::new(TreeNode::new(value)));
+                }
+            }
+            Ordering::Equal => {
+                // 重复值，根据需求可以选择忽略或处理
+                // 这里我们忽略重复值（二叉搜索树通常不允许重复）
+            }
+        }
+    }
+
+    // Search for a value in the tree
+    fn search(&self, value: T) -> bool {
+        match value.cmp(&self.value) {
+            Ordering::Less => {
+                // 在左子树中搜索
+                if let Some(ref left) = self.left {
+                    left.search(value)
+                } else {
+                    false
+                }
+            }
+            Ordering::Greater => {
+                // 在右子树中搜索
+                if let Some(ref right) = self.right {
+                    right.search(value)
+                } else {
+                    false
+                }
+            }
+            Ordering::Equal => true, // 找到值
+        }
+    }
 }
 
 impl<T> BinarySearchTree<T>
 where
     T: Ord,
 {
-
     fn new() -> Self {
         BinarySearchTree { root: None }
     }
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        //TODO
+        if let Some(ref mut root) = self.root {
+            root.insert(value);
+        } else {
+            self.root = Some(Box::new(TreeNode::new(value)));
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        //TODO
-        true
-    }
-}
-
-impl<T> TreeNode<T>
-where
-    T: Ord,
-{
-    // Insert a node into the tree
-    fn insert(&mut self, value: T) {
-        //TODO
+        if let Some(ref root) = self.root {
+            root.search(value)
+        } else {
+            false
+        }
     }
 }
 
