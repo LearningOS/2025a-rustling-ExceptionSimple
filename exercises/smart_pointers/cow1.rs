@@ -12,7 +12,6 @@
 //
 // Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use std::borrow::Cow;
 
@@ -35,7 +34,10 @@ mod tests {
     fn reference_mutation() -> Result<(), &'static str> {
         // Clone occurs because `input` needs to be mutated.
         let slice = [-1, 0, 1];
+        // 由于传入的是一个引用，因此 Cow 此时是 Borrowed 状态
         let mut input = Cow::from(&slice[..]);
+        // 由于元素存在负数，因此要修改数据就必须先进行克隆
+        // 将其转换为拥有所有权的状态，然后才能进行修改操作
         match abs_all(&mut input) {
             Cow::Owned(_) => Ok(()),
             _ => Err("Expected owned value"),
@@ -46,9 +48,11 @@ mod tests {
     fn reference_no_mutation() -> Result<(), &'static str> {
         // No clone occurs because `input` doesn't need to be mutated.
         let slice = [0, 1, 2];
+        // 由于传入的是一个引用，因此 Cow 此时是 Borrowed 状态
         let mut input = Cow::from(&slice[..]);
         match abs_all(&mut input) {
-            // TODO
+            Cow::Borrowed(_) => Ok(()),
+            _ => Err("Expected borrowed value"),
         }
     }
 
@@ -58,9 +62,13 @@ mod tests {
         // case no mutation occurs and thus also no clone, but the result is
         // still owned because it was never borrowed or mutated.
         let slice = vec![0, 1, 2];
+        // 通过 Cow::from 传递数据 [0,1,2] 给 Cow，此时 Cow 拥有这个数据的所有权
         let mut input = Cow::from(slice);
+        // 而后续 abs_all() 也不用改变数据，因为元素都大于 0
+        // 所以就不会发生克隆操作，因此结果仍然是 Cow::Owned
         match abs_all(&mut input) {
-            // TODO
+            Cow::Owned(_) => Ok(()),
+            _ => Err("Expected owned value"),
         }
     }
 
@@ -72,7 +80,8 @@ mod tests {
         let slice = vec![-1, 0, 1];
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
-            // TODO
+            Cow::Owned(_) => Ok(()),
+            _ => Err("Expected owned value"),
         }
     }
 }

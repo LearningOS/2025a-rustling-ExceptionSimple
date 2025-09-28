@@ -6,7 +6,6 @@
 // Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 // Step 1.
 // Complete the `capitalize_first` function.
@@ -15,7 +14,7 @@ pub fn capitalize_first(input: &str) -> String {
     let mut c = input.chars();
     match c.next() {
         None => String::new(),
-        Some(first) => ???,
+        Some(first) => first.to_uppercase().to_string() + c.as_str()
     }
 }
 
@@ -24,7 +23,16 @@ pub fn capitalize_first(input: &str) -> String {
 // Return a vector of strings.
 // ["hello", "world"] -> ["Hello", "World"]
 pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
-    vec![]
+    // e: &&str 对字符串切片的引用，*e 解引用得到 &str
+    // words.iter().map(|e| capitalize_first(*e)).collect()
+
+    // |&e| 模式匹配自动解引用，e 的类型直接就是 &str
+    // words.iter().map(|&e| capitalize_first(e)).collect()
+
+    // Rust 的自动解引用强制转换（deref coercion）
+    // e: &&str
+    // &&str 会自动解引用为 &str 来匹配函数参数
+    words.iter().map(|e| capitalize_first(e)).collect()
 }
 
 // Step 3.
@@ -32,7 +40,7 @@ pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
 // Return a single string.
 // ["hello", " ", "world"] -> "Hello World"
 pub fn capitalize_words_string(words: &[&str]) -> String {
-    String::new()
+    words.iter().map(|&e| capitalize_first(e)).collect()
 }
 
 #[cfg(test)]
